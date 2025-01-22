@@ -1,0 +1,69 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// Enums
+
+enum AnimalSize {
+    SMALL
+    MEDIUM
+    LARGE
+}
+
+enum AnimalAge {
+    JUVENILE
+    ADULT
+    SENIOR
+}
+
+enum AnimalEnergyLevel {
+    VERYLOW
+    LOW
+    AVERAGE
+    HIGH
+    VERYHIGH
+}
+
+enum AnimalIndependencyLevel {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum AnimalEnvironment {
+    SMALL
+    MEDIUM
+    LARGE
+}
+
+model Pet {
+    id           String                  @id @default(uuid())
+    name         String
+    description  String
+    address      String
+    city         String
+    state        String
+    adoptionReqs String[]
+    size         AnimalSize
+    age          AnimalAge
+    energy       AnimalEnergyLevel
+    environment  AnimalEnvironment
+    independency AnimalIndependencyLevel
+
+    @@map("pets")
+}
+
+model Organizer {
+    id            String   @id @default(uuid())
+    name          String
+    email         String   @unique
+    password_hash String
+    address       String
+    phone         String
+    created_at    DateTime @default(now())
+}
