@@ -45,15 +45,14 @@ model Pet {
     id           String                  @id @default(uuid())
     name         String
     description  String
-    address      String
-    city         String
-    state        String
-    adoptionReqs String[]
+    adoptionReqs String[]                @default([])
+    org          Organizer               @relation(fields: [organizerId], references: [id])
     size         AnimalSize
     age          AnimalAge
     energy       AnimalEnergyLevel
     environment  AnimalEnvironment
     independency AnimalIndependencyLevel
+    organizerId  String
 
     @@map("pets")
 }
@@ -64,6 +63,11 @@ model Organizer {
     email         String   @unique
     password_hash String
     address       String
+    city          String
+    state         String
     phone         String
     created_at    DateTime @default(now())
+    Pet           Pet[]
+
+    @@map("organizers")
 }
